@@ -1,5 +1,7 @@
 const { getBot, checkForContractVersion, getPriceFeedForContract, prettyMRequest, isNumeric } = require("./src/common");
-const { Telegraf, Markup } = require("telegraf");
+const express = require('express');
+const expressApp = express();
+
 const { getWeb3 } = require("@uma/common");
 const { markdownv2: tgFormat } = require("telegram-format");
 
@@ -7,6 +9,11 @@ const { MRequest } = require("./src/db");
 
 const web3 = getWeb3();
 const bot = getBot();
+
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://umabottg.herokuapp.com';
+const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
+
 const msgs = {
   welcomeMsg: (userId, name) =>
     `Hey ${tgFormat.userMention(name, userId)} \\!\n\n` +
@@ -117,8 +124,15 @@ bot.command("remove", async ctx => {
   }
 });
 
-bot.launch();
+// bot.launch();
 
-// Enable graceful stop
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+bot.telegram.setWebhook(`${URL}/bot${TG_BOT_TOKEN}`);
+expressApp.use(bot.webhookCallback(`/bot${TG_BOT_TOKEN}`));
+
+
+expressApp.get('/', (req, res) => {
+  res.send('Get well soon, you need help!');
+});
+expressApp.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

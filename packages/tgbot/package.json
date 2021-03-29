@@ -13,11 +13,12 @@
     "dotenv": "^6.2.0",
     "mongoose": "^5.12.1",
     "telegraf": "^4.3.0",
-    "telegram-format": "^2.0.1"
+    "telegram-format": "^2.0.1",
+    "express": "^4.17.1",
+    "truffle": "^5.2.3"
   },
   "devDependencies": {
     "sinon": "^9.0.2",
-    "truffle": "^5.2.3",
     "winston": "^3.2.1"
   },
   "publishConfig": {
