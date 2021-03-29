@@ -33,7 +33,8 @@
   ],
   "bin": "index.js",
   "scripts": {
-    "test": "hardhat test"
+    "bot": "node bot.js  --network mainnet_mnemonic",
+    "server": "truffle exec server.js  --network mainnet_mnemonic"
   },
   "bugs": {
     "url": "https://github.com/UMAprotocol/protocol/issues"

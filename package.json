@@ -18,7 +18,9 @@
     "qbuild": "yarn workspace @uma/core build && yarn lerna run build --stream --ignore '*/*dapp*'",
     "build": "yarn workspace @uma/core build && yarn lerna run build --stream",
     "clean": "yarn lerna run clean --stream",
-    "clean-packages": "yarn lerna clean --yes && rm -rf node_modules"
+    "clean-packages": "yarn lerna clean --yes && rm -rf node_modules",
+    "notify-bot": "yarn workspace @uma/tgbot bot",
+    "notify-server": "yarn workspace @uma/tgbot server"
   },
   "author": "UMA Team",
   "license": "AGPL-3.0",
