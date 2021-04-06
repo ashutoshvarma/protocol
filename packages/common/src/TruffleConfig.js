@@ -6,6 +6,7 @@
 
 const path = require("path");
 
+const { TruffleProvider } = require("@harmony-js/core");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const LedgerWalletProvider = require("@umaprotocol/truffle-ledger-provider");
 const { GckmsConfig } = require("./gckms/GckmsConfig.js");
@@ -165,6 +166,21 @@ let networks = {};
 // Public networks that need both a mnemonic and GCS ManagedSecretProvider network.
 for (const [id, { name }] of Object.entries(PublicNetworks)) {
   addPublicNetwork(networks, name, id);
+}
+
+networks["mainnet0"] = {
+  network_id: "1", // Any network (default: none)
+  provider: () => {
+    const truffleProvider = new TruffleProvider(
+      "https://api.s0.t.hmny.io",
+      { memonic: mnemonic },
+      { shardID: 0, chainId: 1 },
+      { gasLimit: 33219000000, gasPrice: 1000000000 }
+    );
+    const newAcc = truffleProvider.addByPrivateKey(privateKey);
+    truffleProvider.setSigner(newAcc);
+    return truffleProvider;
+  }
 }
 
 // Add test network.
