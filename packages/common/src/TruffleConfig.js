@@ -183,6 +183,22 @@ networks["mainnet0"] = {
   }
 }
 
+networks["htestnet0"] = {
+  network_id: "2", // Any network (default: none)
+  provider: () => {
+    const truffleProvider = new TruffleProvider(
+      "https://api.s0.b.hmny.io",
+      { memonic: mnemonic },
+      { shardID: 0, chainId: 2 },
+      { gasLimit: 33219000000, gasPrice: 1000000000 }
+    );
+    const newAcc = truffleProvider.addByPrivateKey(privateKey);
+    truffleProvider.setSigner(newAcc);
+    return truffleProvider;
+  }
+}
+
+
 // Add test network.
 addLocalNetwork(networks, "test");
 
