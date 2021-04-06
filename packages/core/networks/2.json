@@ -1,0 +1,78 @@
+[
+  {
+    "contractName": "Migrations",
+    "address": "0x1b052Bfd27FE599E4b8757DeF939FD714618bd63"
+  },
+  {
+    "contractName": "Finder",
+    "address": "0xb9aEBA2502Cb114AC3Df59A034Bfe078e4cD7FBE"
+  },
+  {
+    "contractName": "VotingToken",
+    "address": "0xFBbFCf7B5974fD0C19Caa073cE0382f44A5aa98A"
+  },
+  {
+    "contractName": "IdentifierWhitelist",
+    "address": "0xF984245F8cFc1e29C50c2fdD0e52F30AA84467c0"
+  },
+  {
+    "contractName": "Voting",
+    "address": "0x825aF04f9396b0255bDFf06070529626a6A1516c"
+  },
+  {
+    "contractName": "Registry",
+    "address": "0x4afDAF2cC3A7A97151e8DF6D5D9227d125922532"
+  },
+  {
+    "contractName": "FinancialContractsAdmin",
+    "address": "0x32D39a3bb846FfE74D406c9433034DcF78003C27"
+  },
+  {
+    "contractName": "Store",
+    "address": "0x375095Ec78b754fAd08986eB40aE968dE9bb0E70"
+  },
+  {
+    "contractName": "Governor",
+    "address": "0x3a60F4B6aEf79BBD40Bdb059544d79761a676e26"
+  },
+  {
+    "contractName": "DesignatedVotingFactory",
+    "address": "0x47aba8F32FB634b08632B793CEE0E5f25811B97d"
+  },
+  {
+    "contractName": "OptimisticOracle",
+    "address": "0xA2Ff5dACCF14454Bae6b7F7dff09F097A3003918"
+  },
+  {
+    "contractName": "TestnetERC20",
+    "address": "0xAC02F791e42D432585c30524C88ffDaf06a2C667"
+  },
+  {
+    "contractName": "TokenFactory",
+    "address": "0xaA3712C06f75D912D1ee67E15bb31889d1d2e826"
+  },
+  {
+    "contractName": "AddressWhitelist",
+    "address": "0x124a8560f40254aac32504237d5D7C8c8ba9b9C9"
+  },
+  {
+    "contractName": "ExpiringMultiPartyLib",
+    "address": "0x31Ef7275e0B64609C52476eeb22eCDa9fA8df405"
+  },
+  {
+    "contractName": "ExpiringMultiPartyCreator",
+    "address": "0x6dcc5777162e4bDE1d52c7B7A3630F5b635a2EE9"
+  },
+  {
+    "contractName": "WETH9",
+    "address": "0xc5fA937D8C16df18eA89D17999fb052C1eA82e01"
+  },
+  {
+    "contractName": "PerpetualLib",
+    "address": "0x829Cfb46Cbf945b13ACF53Bd5AD52389bA852806"
+  },
+  {
+    "contractName": "PerpetualCreator",
+    "address": "0x879302Cb9Bc2A1E4BaFD6a500A968C702Df31d6a"
+  }
+]
