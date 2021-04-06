@@ -1,14 +1,14 @@
 # UMA on Harmony
 
-UMA is fully deployed on Harmony Mainnet (Shard 0)
+# <pre>**# Overview**</pre>
+Integrate UMA on Harmony so that applications built on Harmony to be able to work with UMA to build synthetic financial products. Developers can deploy any financial
+product that is made possible by UMA.
 
-## Current Deployed System
-
+# <pre>**# Current Deployed System**</pre>
 - [Mainnet0 (network id: 1, shard: 0, name: "mainnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
 - [Testnet (network id: 2, shard: 0, name: "htestnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/2.json)
 
-## Setup
-
+# <pre>**# Setup**</pre>
 After completing these set up steps, we'll be ready to start developing on UMA system in Harmony.
 
 ### Core
@@ -56,7 +56,7 @@ Export your private key using `PRIVATE_KEY` env
 export PRIVATE_KEY="YOUR PRIVATE KEY"
 ```
 
-## UMA Contracts
+# <pre>**# UMA Contracts**</pre>
 
 - **Migrations**
 - **Finder**
@@ -108,7 +108,7 @@ export PRIVATE_KEY="YOUR PRIVATE KEY"
   - Provides convenient Perpetual Multi Party contract utilities.
 - **PerpetualCreator**
 
-## Interacting with Contracts
+# <pre>**# Interacting with Contracts**</pre>
 
 You can interact with deployed contracts using Truffle console, deployed contracts are automatically
 loaded using `truffle-deploy-registry`.
@@ -132,7 +132,7 @@ truffle(htestnet0)>  await identifierWhitelist.addSupportedIdentifier(myIdentifi
 
 ```
 
-## Deployed EMPs
+# <pre>**# Deployed EMPs**</pre>
 
 - ### Testnet
 
@@ -147,7 +147,7 @@ truffle(htestnet0)>  await identifierWhitelist.addSupportedIdentifier(myIdentifi
   - **Synthetic Symbol** - uBTC_TEST
   - **Price Identifier** - BTC/USD
 
-## Deploy EMP Financial Product Template
+# <pre>**# Deploy EMP Financial Product Template**</pre>
 
 1. Open the truffle console and connect it to the network.
 
@@ -179,7 +179,7 @@ const txResult = await empCreator.createExpiringMultiParty(constructorParams)
 const emp = await ExpiringMultiParty.at(txResult.logs[0].args.expiringMultiPartyAddress)
 ```
 
-## Deployment Steps
+# <pre>**# Deployment Steps**</pre>
 
 All the truffle migrations configurations are modified for harmony, so its pretty straight to deploy
 
