@@ -2,14 +2,14 @@
 
 # <pre>**# Overview**</pre>
 Integrate UMA on Harmony so that applications built on Harmony to be able to work with UMA to build synthetic financial products. Developers can deploy any financial
-product that is made possible by UMA.
+the product that is made possible by UMA.
 
 # <pre>**# Current Deployed System**</pre>
 - [Mainnet0 (network id: 1, shard: 0, name: "mainnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
 - [Testnet (network id: 2, shard: 0, name: "htestnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/2.json)
 
 # <pre>**# Setup**</pre>
-After completing these set up steps, we'll be ready to start developing on UMA system in Harmony.
+After completing these setup steps, we'll be ready to start developing on UMA system in Harmony.
 
 ### Core
 
@@ -32,7 +32,7 @@ yarn qbuild
 
 If everything worked, we should see the line "> Compiled successfully using:" in the output.
 
-### Supported Newtork
+### Supported Network
 
 UMA has been deployed to both Harmony Testnet and Mainnet
 (Shard 0)
@@ -89,7 +89,7 @@ export PRIVATE_KEY="YOUR PRIVATE KEY"
   - Takes proposals for certain governance actions and allows UMA token
     holders to vote on them.
 - **DesignatedVotingFactory**
-  - Factory to deploy new instances of DesignatedVoting and look up
+  - Factory to deploy new instances of DesignatedVoting and lookup
     previously deployed instances.
 - **OptimisticOracle**
   - Optimistic Requester.
@@ -110,7 +110,7 @@ export PRIVATE_KEY="YOUR PRIVATE KEY"
 
 # <pre>**# Interacting with Contracts**</pre>
 
-You can interact with deployed contracts using Truffle console, deployed contracts are automatically
+You can interact with deployed contracts using the Truffle console, deployed contracts are automatically
 loaded using `truffle-deploy-registry`.
 
 Start the truffle console
@@ -120,7 +120,7 @@ export PRIVATE_KEY="YOUR_PRIVAT_KEY"
 yarn truffle console --network htestnet0
 ```
 
-**For Example :-**
+**For Example:-**
 Check whether "UMATEST" is approved as a valid price identifier.
 
 ```
@@ -189,4 +189,4 @@ $ yarn truffle migrate  --network htestnet0 --reset --skipDryRun
 
 ### Note
 
-UMA is a large Repo so sometimes during deplyment truffle timeouts or just hangs. In such just run the each deployemnt scripts manualy in order.
+UMA is a large Repo so sometimes during deployment truffle timeouts or just hangs. In such a case just run each deployment scripts manually in order.
