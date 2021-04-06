@@ -4,154 +4,138 @@ UMA is fully deployed on Harmony Mainnet (Shard 0)
 
 ## Current Deployed System
 
-- [Mainnet0 (network id: 1, shard: 0)](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
+- [Mainnet0 (network id: 1, shard: 0, name: "mainnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
+- [Testnet (network id: 2, shard: 0, name: "htestnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/2.json)
 
-This will show you how to deploy EMP and create synthetic tokens from the command line for Harmony Mainnet. Before beginning this, please make sure your environment is set up correctly by following the commands :
 
-- Clone the repo
-- `yarn`
-- `yarn qbuild`
-- Create `.env` file like
-  ```
-  PRIVATE_KEY=<YOUR_MAINNET_PRIVATE_KEY>
-  ```
+## Setup
 
-## Parameterize and deploy a EMP contract
+After completing these set up steps, we'll be ready to start developing on UMA system in Harmony.
 
-1. Open the truffle console and connect it to the test network.
+### Core
+Clone the UMA [repo](https://github.com/ashutoshvarma/protocol). Start in the top-level directory in this repository, `protocol/`.
+
+Checkout to `harmony` branch - `git checkout harmony`
+
+1. Install version 14.x of [Node.js](https://nodejs.org/) and [Yarn](https://classic.yarnpkg.com/) is installed along with it.
+2. Run the following in the root of the repo to install all packages from the UMA mono repo:
+```bash
+yarn
+```
+
+We should be able to compile the smart contracts:
 
 ```bash
-yarn truffle console --network mainnet0
+yarn qbuild
 ```
 
-2. Migrate the contracts within the truffle console with the migrate command:
+If everything worked, we should see the line "> Compiled successfully using:" in the output.
 
-```bash
-truffle(mainnet0)> migrate
+### Supported Newtork
+
+UMA has been deployed to both Harmony Testnet and Mainnet
+(Shard 0)
+
+- [Mainnet (network id: 1, shard: 0, name: "mainnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
+- [Testnet (network id: 2, shard: 0, name: "htestnet0")](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/2.json)
+
+To switch between networks in truffle use `--network NETWORK_NAME` command-line augment
+
+#### For Example:-
+```console
+yarn truffle console --network htestnet0   // Start truffle console for testnet
 ```
 
-3. Create an instance of the ExpiringMultiParty creator (the contract factory for synthetic tokens).
-   This command should return “undefined”.
+### Keys
+Export your private key using `PRIVATE_KEY` env
 
-```js
-const empCreator = await ExpiringMultiPartyCreator.deployed()
+```
+export PRIVATE_KEY="YOUR PRIVATE KEY"
 ```
 
-4. Define the parameters for the synthetic tokens you would like to create.
+## UMA Contracts
+- **Migrations**
+- **Finder**
+    - Provides addresses of the live contracts 
+      implementing certain interfaces.
+- **VotingToken**
+    - Ownership of this token allows a voter to respond to price 
+      requests. Supports snap-shotting and allows the Oracle to 
+      mint new tokens as rewards.
+- **IdentifierWhitelist**
+    - Stores a whitelist of supported identifiers that the oracle can provide prices for. 
+- **Voting**
+    - Voting system for Oracle.
+    - Handles receiving and resolving price requests via a commit-reveal 
+      voting scheme.
+- **Registry**
+    - Registry for financial contracts and approved financial contract 
+      creators.
+    - Maintains a whitelist of financial contract creators that are allowed 
+      to register new financial contracts and stores party members of 
+      financial contract.
+- **FinancialContractsAdmin**
+    - Admin for financial contracts in the UMA system.
+    - Allows appropriately permissioned admin roles to interact with financial 
+      contracts.
+- **Store**
+    - An implementation of Store that can accept Oracle fees in ETH or any 
+      arbitrary ERC20 token.
+- **Governor** 
+    - Takes proposals for certain governance actions and allows UMA token 
+      holders to vote on them.
+- **DesignatedVotingFactory** 
+    - Factory to deploy new instances of DesignatedVoting and look up 
+      previously deployed instances.
+- **OptimisticOracle** 
+    - Optimistic Requester.
+- **TestnetERC20**
+    - An implementation of ERC20 with the same interface as the Compound project's testnet tokens (mainly DAI) (Just for Testing) 
+- **TokenFactory**
+    - Factory for creating new mintable and burnable tokens.
+- **AddressWhitelist**
+    - A contract to track a whitelist of addresses.
+- **ExpiringMultiPartyLib** 
+    - Provides convenient Expiring Multi Party contract utilities.
+- **ExpiringMultiPartyCreator**
+    - Expiring Multi Party Contract creator.
+- **WETH9**
+- **PerpetualLib**
+    - Provides convenient Perpetual Multi Party contract utilities.
+- **PerpetualCreator**
 
-Note that in this example, `priceFeedIdentifier`, is set to "UMATEST" but you can choose any from the following approved [price identifiers on mainnet0]()
+## Interacting with Contracts
+You can interact with deployed contracts using Truffle console, deployed contracts are automatically
+loaded using `truffle-deploy-registry`.
 
-<!-- prettier-ignore -->
-```js
-const constructorParams = { expirationTimestamp: "1706780800", collateralAddress: TestnetERC20.address, priceFeedIdentifier: web3.utils.padRight(web3.utils.utf8ToHex("UMATEST"), 64), syntheticName: "Test UMA Token", syntheticSymbol: "UMATEST", collateralRequirement: { rawValue: web3.utils.toWei("1.5") }, disputeBondPercentage: { rawValue: web3.utils.toWei("0.1") }, sponsorDisputeRewardPercentage: { rawValue: web3.utils.toWei("0.1") }, disputerDisputeRewardPercentage: { rawValue: web3.utils.toWei("0.1") }, minSponsorTokens: { rawValue: '100000000000000' }, timerAddress: '0x0000000000000000000000000000000000000000', withdrawalLiveness: 7200, liquidationLiveness: 7200, financialProductLibraryAddress: '0x0000000000000000000000000000000000000000'}
+Start the truffle console 
+
+```
+export PRIVATE_KEY="YOUR_PRIVAT_KEY"
+yarn truffle console --network htestnet0     
 ```
 
-5. Before the contract for the synthetic tokens can be created, the price identifier for the synthetic tokens must be registered with `IdentifierWhitelist`.
-   This is important to ensure that the UMA DVM can resolve any disputes for these synthetic tokens.
+**For Example :-**
+Check whether "UMATEST" is approved as a valid price identifier.
+```
+truffle(htestnet0)>  const finder = await Finder.deployed()
+truffle(htestnet0)>  const identifierWhitelist = await IdentifierWhitelist.deployed()
+truffle(htestnet0)>  
+truffle(htestnet0)>  const myIdentifier = web3.utils.padRight(web3.utils.utf8ToHex("UMATEST"), 64)
+truffle(htestnet0)>  await identifierWhitelist.addSupportedIdentifier(myIdentifier)
 
-6) Now, we can create a new ExpiringMultiParty synthetic token with the factory instance.
-
-```js
-const txResult = await empCreator.createExpiringMultiParty(constructorParams)
-const emp = await ExpiringMultiParty.at(txResult.logs[0].args.expiringMultiPartyAddress)
 ```
 
-## Create new tokens from an existing contract
+## Deployed EMPs
 
-1. Now that we’ve parameterized and deployed the synthetic token contract, we will create synthetic tokens from that contract.
-   The first step is to create an instance of the Test token and mint 10,000 to the wallet.
-   This is the token that will serve as collateral for the synthetic token.
-   Give permission to the empCreator to spend the collateral tokens on our behalf.
+- ### Testnet
+  - **EMP Address**  - [0x8c4394c5c1E997BD7cA25605D1c821Cbd37cF534](https://explorer.testnet.harmony.one/#/address/one133pef3wpaxtm6l9z2czarjppe0fheaf59jp3y7)
+  - **Synthetic Token Name** - Test UMA Token
+  - **Synthetic Symbol** - UMATEST
+  - **Price Identifier** - UMATEST
 
-```js
-const collateralToken = await TestnetERC20.deployed()
-await collateralToken.allocateTo(accounts[0], web3.utils.toWei("10000"))
-await collateralToken.approve(emp.address, web3.utils.toWei("10000"))
-```
-
-2. We can now create a synthetic token position. We will deposit 150 units of collateral (the first argument) to create 100 units of synthetic tokens (the second argument).
-
-```js
-await emp.create({ rawValue: web3.utils.toWei("150") }, { rawValue: web3.utils.toWei("100") })
-```
-
-3. Let’s check that we now have synthetic tokens. We should have 100 synthetic tokens and 9,850 collateral tokens remaining.
-
-<!-- prettier-ignore -->
-```js
-const syntheticToken = await SyntheticToken.at(await emp.tokenCurrency())
-// synthetic token balance. Should equal what we minted in step 2.
-(await syntheticToken.balanceOf(accounts[0])).toString()
-
-// Collateral token balance. Should equal original balance (1000e18) minus deposit (150e18).
-(await collateralToken.balanceOf(accounts[0])).toString()
-
-// position information. Can see the all key information about our position.
-await emp.positions(accounts[0])
-```
-
-## Redeem tokens against a contract
-
-1. Because we are a token sponsor for this synthetic token contract, we can redeem some of the tokens we minted even before the synthetic token expires. Let's redeem half.
-
-```js
-await syntheticToken.approve(emp.address, web3.utils.toWei("10000"))
-await emp.redeem({ rawValue: web3.utils.toWei("50") })
-```
-
-2. Let’s check that our synthetic token balance has decreased and our collateral token balance has increased.
-   Our synthetic token balance should now be 50.
-   Because the contract does not have an on-chain price feed to determine the token redemption value for the tokens, it will give us collateral equal to the proportional value value of the total collateral deposited to back the 100 tokens (50/100 \* 150 = 75).
-   Our collateral token balance should increase to 9,925.
-
-<!-- prettier-ignore -->
-```js
-// Print balance of collateral token.
-(await collateralToken.balanceOf(accounts[0])).toString()
-
-// Print balance of the synthetic token.
-(await syntheticToken.balanceOf(accounts[0])).toString()
-
-// position information
-await emp.positions(accounts[0])
-```
-
-## Deposit and withdraw collateral
-
-1. As a token sponsor, we may wish to add additional collateral to our position to avoid being liquidated.
-   Let’s deposit 10 additional collateral tokens to our position and see our updated balance, from 9,925 to 9,915.
-
-<!-- prettier-ignore -->
-```js
-await emp.deposit({ rawValue: web3.utils.toWei("10") })
-(await collateralToken.balanceOf(accounts[0])).toString()
-```
-
-2. For a token sponsor to withdraw collateral from his position, there are typically 2 ways to do this.
-   Read this [explainer](synthetic-tokens/what-are-synthetic-assets.md) for more information.
-   In this scenario, because we are the only token sponsor, we will have to withdraw collateral the “slow” way. First, we need to request a withdrawal of 10 collateral tokens.
-
-```js
-await emp.requestWithdrawal({ rawValue: web3.utils.toWei("10") })
-```
-
-3. Now, we need to simulate the withdrawal liveness period passing without a dispute of our withdrawal request. The `ExpiringMultipartyCreator` used in step 8 has a strict withdrawal liveness of 7200 seconds, or 2 hours. This means that in order for a withdrawal request to be processed _at least_ 2 hours must pass before attempting to withdraw from the position. We can simulate time advancing until after this withdrawal liveness period by using an the deployed instance of `Timer`. This contact acts to simulate time changes within the UMA ecosystem when testing smart contracts.
-
-```js
-// Create an instance of the `Timer` Contract
-const timer = await Timer.deployed()
-
-// Advance time forward from the current time to current time + 7201 seconds
-await timer.setCurrentTime((await timer.getCurrentTime()).toNumber() + 7201)
-
-// Withdraw the now processed request.
-await emp.withdrawPassedRequest()
-```
-
-4. Let’s now check that our collateral token balance has returned to 9,925.
-
-<!-- prettier-ignore -->
-```js
-// collateral token balance
-(await collateralToken.balanceOf(accounts[0])).toString()
-```
+- ### Mainnet0
+  - **EMP Address**  - [0xa42675322870Df548A53FCDb8b389Dd9033B84b7](https://explorer.harmony.one/#/address/0xa42675322870Df548A53FCDb8b389Dd9033B84b7)
+  - **Synthetic Token Name** - Test uBTC
+  - **Synthetic Symbol** - uBTC_TEST
+  - **Price Identifier** - BTC/USD
