@@ -1,257 +1,157 @@
-# UMA Protocol
+# UMA on Harmony
 
-<p align="center">
-  <img alt="UMA Logo" src="./documentation/Logo.png" width="440">
-</p>
+UMA is fully deployed on Harmony Mainnet (Shard 0)
 
-[![<UMAprotocol>](https://circleci.com/gh/UMAprotocol/protocol.svg?style=shield)](https://app.circleci.com/pipelines/github/UMAprotocol/protocol)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/umaprotocol/protocol)](https://hub.docker.com/r/umaprotocol/protocol)
-[![Coverage Status](https://coveralls.io/repos/github/UMAprotocol/protocol/badge.svg?branch=master)](https://coveralls.io/github/UMAprotocol/protocol?branch=master)
+## Current Deployed System
 
-[![GitHub](https://img.shields.io/github/license/UMAprotocol/protocol)](https://github.com/UMAprotocol/protocol/blob/master/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/UMAprotocol/protocol)](https://github.com/UMAprotocol/protocol/commits/master)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/UMAprotocol/protocol)](https://github.com/UMAprotocol/protocol/commits/master)
-[![GitHub contributors](https://img.shields.io/github/contributors-anon/UMAprotocol/protocol)](https://github.com/UMAprotocol/protocol/graphs/contributors)
+- [Mainnet0 (network id: 1, shard: 0)](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/networks/1.json)
 
-[![Generic badge](https://img.shields.io/badge/homepage-view-red.svg)](https://umaproject.org/)
-[![Generic badge](https://img.shields.io/badge/discord-join-green.svg)](https://discord.com/invite/jsb9XQJ)
-[![Generic badge](https://img.shields.io/badge/send-email-blue.svg)](mailto:hello@umaproject.org)
-[![Twitter Follow](https://img.shields.io/twitter/follow/UMAprotocol?label=follow%20%40UMAprotocol&style=social)](https://twitter.com/UMAprotocol)
+This will show you how to deploy EMP and create synthetic tokens from the command line for Harmony Mainnet. Before beginning this, please make sure your environment is set up correctly by following the commands :
 
-## Documentation 📚
+- Clone the repo
+- `yarn`
+- `yarn qbuild`
+- Create `.env` file like
+  ```
+  PRIVATE_KEY=<YOUR_MAINNET_PRIVATE_KEY>
+  ```
 
-Our docs site is [here](https://docs.umaproject.org). It contains tutorials, explainers, and smart contract
-documentation. If you'd like to view these docs on github instead, check out the
-[documentation folder in the docs repo](https://github.com/UMAprotocol/docs/tree/master/docs).
+## Parameterize and deploy a EMP contract
 
-## Security and Bug Bounty 🐛
+1. Open the truffle console and connect it to the test network.
 
-Please see [here](https://docs.umaproject.org/dev-ref/bug-bounty) for details on our bug bounty.
-
-## Contributing 🙌
-
-Please see our [contributing guidelines](./CONTRIBUTING.md).
-
-## Developer Information and Tools 👩‍💻
-
-For detailed information on how to initialize and interact with our smart contracts, please see the
-[documentation site](https://docs.umaproject.org).
-
-### Install dependencies 👷‍♂️
-
-You'll need to install the long-term support version of nodejs, currently nodejs v14. You will also need to install yarn. Assuming that's done, run `yarn` with no args:
-
-```
-yarn
+```bash
+yarn truffle console --network mainnet0
 ```
 
-If you'd like to completely clear all packages' `node_modules` and reinstall all deps from scratch, run:
+2. Migrate the contracts within the truffle console with the migrate command:
 
-```
-yarn clean-packages
-yarn
-```
-
-### Build the code 🧐
-
-Some code in the repository requires a build step to compile it. To run this build step, use the `qbuild` (quick build) command:
-
-```
-yarn qbuild
+```bash
+truffle(mainnet0)> migrate
 ```
 
-The above command does not include dapps because dapps take a long time to build and they have their own scripts to run locally.
-However, if you'd like to build _everything_, you can use the build command:
-
-```
-yarn build
-```
-
-To remove any remnants of previous builds, you can run:
-
-```
-yarn clean
-```
-
-### Run tests 🦾
-
-To run tests, you'll need to start ganache on port 9545:
-
-```
-yarn ganache-cli -e 1000000000 -p 9545 -l 9000000 -d
-```
-
-Note: if you're interested in what these args do:
-
-- `-e` is the amount of ETH to grant the default accounts.
-- `-p` is the port that ganache will listen on.
-- `-d` tells ganache to use a standard set of deterministic accounts on each run.
-
-Then, you can run all of the tests across the repo by running:
-
-```
-yarn test
-```
-
-However, running all of the tests across the repository takes a lot of time. To run the tests for just
-one package, you can run:
-
-```
-yarn workspace <package_name> test
-```
-
-### Running the linter 🧽
-
-To run the linter in autofix mode (it will attempt to fix any errors it finds), run:
-
-```
-yarn lint-fix
-```
-
-To run the linter in the default mode, where it will print all errors and not modify code, run:
-
-```
-yarn lint
-```
-
-### Packages 📦
-
-Because this repo is a monorepo, it conatains many different npm packages. More will be discussed about these packages in the
-following sections. However, the basic structure is that each pacakge is listed in the `packages/` directory. Each package has
-its own scripts and dependencies and operates (mostly) independently from the others.
-
-### Adding dependencies 👩‍👦
-
-All runtime/production dependencies should be added to the package that needs them. Development dependencies
-should also generally be installed in packages unless they are needed by code that exists outside of any package.
-
-For more details on packages and the monorepo, please see the next section.
-
-To add a dependency to a package:
-
-```
-yarn workspace <package_name> add <dependency_name>
-```
-
-Note: development dependencies are those that are not required by the code that's published to the npm registry. If you're not
-sure whether a dependency should be dev or not, just ask! To install a dev dependency in a package:
-
-```
-yarn workspace <package_name> add <dependency_name> --dev
-```
-
-Note: all root dependencies should be dev dependencies because the root package is not published to npm, so there is no "production" code.
-To install a dev dependency at root:
-
-```
-yarn add <dependency_name> --dev
-```
-
-After you've installed a dependency, yarn should automatically update the `yarn.lock` file. If git doesn't notice any changes in that file,
-run `yarn` to update the lockfile.
-
-### Depending on another package in the monorepo 🤝
-
-The standard way to pull a JS element from another package is to reference it like this:
+3. Create an instance of the ExpiringMultiParty creator (the contract factory for synthetic tokens).
+   This command should return “undefined”.
 
 ```js
-const { importedObject } = require("@uma/some-package")
+const empCreator = await ExpiringMultiPartyCreator.deployed()
 ```
 
-Note: the require will resolve to the `main` file specified in the `package.json` file. If you'd like to import a different file, you
-should ensure that that file is exported in the `files` directive inside the `package.json` file. Once you're sure of that, you can
-import it using the following syntax:
+4. Define the parameters for the synthetic tokens you would like to create.
+
+Note that in this example, `priceFeedIdentifier`, is set to "UMATEST" but you can choose any from the following approved [price identifiers on mainnet0]()
+
+<!-- prettier-ignore -->
+```js
+const constructorParams = { expirationTimestamp: "1706780800", collateralAddress: TestnetERC20.address, priceFeedIdentifier: web3.utils.padRight(web3.utils.utf8ToHex("UMATEST"), 64), syntheticName: "Test UMA Token", syntheticSymbol: "UMATEST", collateralRequirement: { rawValue: web3.utils.toWei("1.5") }, disputeBondPercentage: { rawValue: web3.utils.toWei("0.1") }, sponsorDisputeRewardPercentage: { rawValue: web3.utils.toWei("0.1") }, disputerDisputeRewardPercentage: { rawValue: web3.utils.toWei("0.1") }, minSponsorTokens: { rawValue: '100000000000000' }, timerAddress: '0x0000000000000000000000000000000000000000', withdrawalLiveness: 7200, liquidationLiveness: 7200, financialProductLibraryAddress: '0x0000000000000000000000000000000000000000'}
+```
+
+5. Before the contract for the synthetic tokens can be created, the price identifier for the synthetic tokens must be registered with `IdentifierWhitelist`.
+   This is important to ensure that the UMA DVM can resolve any disputes for these synthetic tokens.
+
+6) Now, we can create a new ExpiringMultiParty synthetic token with the factory instance.
 
 ```js
-const { importedObject } = require("@uma/some-package/path/to/some/file")
+const txResult = await empCreator.createExpiringMultiParty(constructorParams)
+const emp = await ExpiringMultiParty.at(txResult.logs[0].args.expiringMultiPartyAddress)
 ```
 
-Note: if this file isn't exported by the `files` directive, it will work locally, but fail when run via an npm installation.
+## Create new tokens from an existing contract
 
-To install this dependency you're using in `@uma/my-package`, you should run the following command:
+1. Now that we’ve parameterized and deployed the synthetic token contract, we will create synthetic tokens from that contract.
+   The first step is to create an instance of the Test token and mint 10,000 to the wallet.
+   This is the token that will serve as collateral for the synthetic token.
+   Give permission to the empCreator to spend the collateral tokens on our behalf.
 
-```
-yarn lerna add @uma/some-package --scope @uma/my-package
-```
-
-By default, this will symlink the package in `node_modules` rather than attempting to pull the package via npm. This allows
-the packages to depend on the in-repo versions of one another. If you'd like to reference a particular version from npm,
-you can specify that version exactly in the `package.json` file.
-
-### Using yarn and lerna 🧑‍🍳
-
-This repository is a monorepo. That means that it contains many different, but related packages.
-It uses [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) and [lerna](https://github.com/lerna/lerna)
-to manage these packages.
-
-Note: lerna and yarn workspaces have some overlapping functionality. This is because `lerna` predates `yarn` workspaces and
-is compatible with `yarn` alternatives that don't have workspace functions, like `npm`.
-
-`yarn` should be installed globally to use this repo. This means that you can run any yarn command by running:
-
-```
-yarn <command>
+```js
+const collateralToken = await TestnetERC20.deployed()
+await collateralToken.allocateTo(accounts[0], web3.utils.toWei("10000"))
+await collateralToken.approve(emp.address, web3.utils.toWei("10000"))
 ```
 
-Once you run `yarn` during the install section above, lerna should have been installed locally. After that,
-you should be able to run lerna commands using yarn:
+2. We can now create a synthetic token position. We will deposit 150 units of collateral (the first argument) to create 100 units of synthetic tokens (the second argument).
 
-```
-yarn lerna <command>
-```
-
-To run a yarn command in a particular sub-package, you can run the following from _anywhere in the repo_:
-
-```
-yarn workspace <package_name> <script>
+```js
+await emp.create({ rawValue: web3.utils.toWei("150") }, { rawValue: web3.utils.toWei("100") })
 ```
 
-For instance, this could be used to run the build command in the `@uma/core` package:
+3. Let’s check that we now have synthetic tokens. We should have 100 synthetic tokens and 9,850 collateral tokens remaining.
 
-```
-yarn workspace @uma/core build
-```
+<!-- prettier-ignore -->
+```js
+const syntheticToken = await SyntheticToken.at(await emp.tokenCurrency())
+// synthetic token balance. Should equal what we minted in step 2.
+(await syntheticToken.balanceOf(accounts[0])).toString()
 
-or to install the truffle package as a devDependency in the `@uma/liquidator` package:
+// Collateral token balance. Should equal original balance (1000e18) minus deposit (150e18).
+(await collateralToken.balanceOf(accounts[0])).toString()
 
-```
-yarn workspace @uma/liquidator add truffle --dev
-```
-
-To run a package script in _every_ package that has a script by that name, you should use `lerna`:
-
-```
-yarn lerna run <script> --stream
+// position information. Can see the all key information about our position.
+await emp.positions(accounts[0])
 ```
 
-Note: the stream argument is just to force lerna to stream the output so you get realtime logs, but it's not required.
+## Redeem tokens against a contract
 
-### Coverage 🔎
+1. Because we are a token sponsor for this synthetic token contract, we can redeem some of the tokens we minted even before the synthetic token expires. Let's redeem half.
 
-We use the [solidity-coverage](https://github.com/sc-forks/solidity-coverage) package to generate our coverage reports.
-You can find the coverage report at [coveralls](https://coveralls.io/github/UMAprotocol/protocol). Otherwise, you can generate it locally by running:
-
-```
-./ci/coverage.sh packages/core
+```js
+await syntheticToken.approve(emp.address, web3.utils.toWei("10000"))
+await emp.redeem({ rawValue: web3.utils.toWei("50") })
 ```
 
-The full report can be viewed by opening the `packages/core/coverage/index.html` file in a browser.
+2. Let’s check that our synthetic token balance has decreased and our collateral token balance has increased.
+   Our synthetic token balance should now be 50.
+   Because the contract does not have an on-chain price feed to determine the token redemption value for the tokens, it will give us collateral equal to the proportional value value of the total collateral deposited to back the 100 tokens (50/100 \* 150 = 75).
+   Our collateral token balance should increase to 9,925.
 
-### Style Guide 🕺
+<!-- prettier-ignore -->
+```js
+// Print balance of collateral token.
+(await collateralToken.balanceOf(accounts[0])).toString()
 
-See [STYLE.md](STYLE.md).
+// Print balance of the synthetic token.
+(await syntheticToken.balanceOf(accounts[0])).toString()
 
-## Roadmap for the DVM 🛣
+// position information
+await emp.positions(accounts[0])
+```
 
-Version 1 of the UMA Token and DVM have been released and launched. You can find the addresses of relevant contracts
-[here](./packages/core/networks/1.json). This version implements most of what's described in the
-[whitepaper](https://github.com/UMAprotocol/whitepaper/blob/master/UMA-DVM-oracle-whitepaper.pdf). Notable exceptions
-include:
+## Deposit and withdraw collateral
 
-- The voting process uses a simple modal majority. If there is no majority, the vote is retried in the next round.
-- Defense against parasitic usage as described in section 8.1.
-- The buyback-and-burn mechanism is currently run by the UMA Foundation rather than other automated mechanisms
-  mentioned in section 5.2.
+1. As a token sponsor, we may wish to add additional collateral to our position to avoid being liquidated.
+   Let’s deposit 10 additional collateral tokens to our position and see our updated balance, from 9,925 to 9,915.
 
-The goal is to bring the implementation closer to the whitepaper in future DVM upgrades. Please see the
-[documentation site](https://docs.umaproject.org) for more details.
+<!-- prettier-ignore -->
+```js
+await emp.deposit({ rawValue: web3.utils.toWei("10") })
+(await collateralToken.balanceOf(accounts[0])).toString()
+```
+
+2. For a token sponsor to withdraw collateral from his position, there are typically 2 ways to do this.
+   Read this [explainer](synthetic-tokens/what-are-synthetic-assets.md) for more information.
+   In this scenario, because we are the only token sponsor, we will have to withdraw collateral the “slow” way. First, we need to request a withdrawal of 10 collateral tokens.
+
+```js
+await emp.requestWithdrawal({ rawValue: web3.utils.toWei("10") })
+```
+
+3. Now, we need to simulate the withdrawal liveness period passing without a dispute of our withdrawal request. The `ExpiringMultipartyCreator` used in step 8 has a strict withdrawal liveness of 7200 seconds, or 2 hours. This means that in order for a withdrawal request to be processed _at least_ 2 hours must pass before attempting to withdraw from the position. We can simulate time advancing until after this withdrawal liveness period by using an the deployed instance of `Timer`. This contact acts to simulate time changes within the UMA ecosystem when testing smart contracts.
+
+```js
+// Create an instance of the `Timer` Contract
+const timer = await Timer.deployed()
+
+// Advance time forward from the current time to current time + 7201 seconds
+await timer.setCurrentTime((await timer.getCurrentTime()).toNumber() + 7201)
+
+// Withdraw the now processed request.
+await emp.withdrawPassedRequest()
+```
+
+4. Let’s now check that our collateral token balance has returned to 9,925.
+
+<!-- prettier-ignore -->
+```js
+// collateral token balance
+(await collateralToken.balanceOf(accounts[0])).toString()
+```
