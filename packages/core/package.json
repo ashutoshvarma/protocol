@@ -13,7 +13,8 @@
     "@uma/core-2-0-1": "npm:@uma/core@2.0.1",
     "@uniswap/lib": "4.0.1-alpha",
     "@uniswap/v2-core": "1.0.0",
-    "@uniswap/v2-periphery": "1.1.0-beta.0"
+    "@uniswap/v2-periphery": "1.1.0-beta.0",
+    "@harmony-js/core" : "^0.1.57"
   },
   "devDependencies": {
     "@awaitjs/express": "^0.3.0",
