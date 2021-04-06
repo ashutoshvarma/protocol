@@ -1,78 +1,70 @@
 [
   {
     "contractName": "Migrations",
-    "address": "0x28a5dA04a94F0501A6F77dF8f8A9529d27b92744"
+    "address": "0x65A0fA30d02F5192ba7477ED813A3089E9cE54f7"
   },
   {
     "contractName": "Finder",
-    "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+    "address": "0xbe6B2493793A1b3fFeBAd118F589E551fe6cCd10"
   },
   {
     "contractName": "VotingToken",
-    "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+    "address": "0xb19F60c2Af5aFd2Aa54F84DE1D29FEa2D94B4116"
   },
   {
     "contractName": "IdentifierWhitelist",
-    "address": "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
+    "address": "0x84636C0E9193e1f01EC73148cF18e69Cd8F1A7cF"
   },
   {
     "contractName": "Voting",
-    "address": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77"
+    "address": "0x4e2699386b78bF351fCFD119043F965f7aB8cfaF"
   },
   {
     "contractName": "Registry",
-    "address": "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
+    "address": "0xa6C2966F286e1B71B7Bd4837d0a95A641AfE0C0a"
   },
   {
     "contractName": "FinancialContractsAdmin",
-    "address": "0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A"
+    "address": "0x0339912328587dF0cB70BE03A10bAeB6EA91fc85"
   },
   {
     "contractName": "Store",
-    "address": "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+    "address": "0xA76933981406D38317f3de8d3e349126524941Ec"
   },
   {
     "contractName": "Governor",
-    "address": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
+    "address": "0xd77A78F89bD12383C4e086EE6a2c990E221869D2"
   },
   {
     "contractName": "DesignatedVotingFactory",
-    "address": "0xDE7c02aD2b925587Bd16724810f994a2948c4a38"
-  },
-  {
-    "contractName": "WETH9",
-    "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-  },
-  {
-    "contractName": "TokenFactory",
-    "address": "0x7c96d6235CfaaCcAc5d80fCe74E6032B25dd1F03"
-  },
-  {
-    "contractName": "AddressWhitelist",
-    "address": "0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
-  },
-  {
-    "contractName": "ExpiringMultiPartyLib",
-    "address": "0xa10648Da824330d7C7670E26a234bEf442E77f20"
-  },
-  {
-    "contractName": "ExpiringMultiPartyCreator",
-    "address": "0xddfC7E3B4531158acf4C7a5d2c3cB0eE81d018A5"
+    "address": "0x9919Ca9CcB35e754f94b6A0B4AF26107ce9Faf53"
   },
   {
     "contractName": "OptimisticOracle",
-    "address": "0x287a1bA52e030459F163f48b2Ae468a085003A07"
+    "address": "0x675A7A6ffda3C279cbB7BaC8552b3660203FaFd7"
   },
   {
-    "contractName": "PerpetualLib",
-    "address": "0x026ed73A36b37B871Be7bfd25D1C62B9bfB358b5"
+    "contractName": "TestnetERC20",
+    "address": "0x815A8FBEf3F70BD82885663AB0505bedEF4e51D6"
   },
   {
-    "contractName": "PerpetualCreator",
-    "address": "0xE9f67235C1B0EE401e5F5e119fB9DFc9753F10F9"
+    "contractName": "TokenFactory",
+    "address": "0x825aF04f9396b0255bDFf06070529626a6A1516c"
   },
   {
-    "contractName": "DSProxyFactory",
-    "address": "0xAB75727d4e89A7f7F04f57C00234a35950527115"
+    "contractName": "AddressWhitelist",
+    "address": "0x42AA0F8FAAeF488954Bb482Dd75E86928dA9bf26"
+  },
+  {
+    "contractName": "ExpiringMultiPartyLib",
+    "address": "0xF12fb07B7ab1dA4c946e02DD76201d622256dedA"
+  },
+  {
+    "contractName": "ExpiringMultiPartyCreator",
+    "address": "0x3c124faF50217d63EEd046E804BA9492b8912a97"
+  },
+  {
+    "contractName": "WETH9",
+    "address": "0xD09396Bfe57416b9350D3C23F2b3821d3Fec9A0E"
   }
 ]
