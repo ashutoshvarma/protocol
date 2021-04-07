@@ -140,12 +140,93 @@ truffle(htestnet0)>  await identifierWhitelist.addSupportedIdentifier(myIdentifi
   - **Synthetic Token Name** - Test UMA Token
   - **Synthetic Symbol** - UMATEST
   - **Price Identifier** - UMATEST
+  - **Collateral Currency** - [`TestnetERC20`](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/contracts/common/implementation/TestnetERC20.sol)
 
 - ### Mainnet0
   - **EMP Address** - [0xa42675322870Df548A53FCDb8b389Dd9033B84b7](https://explorer.harmony.one/#/address/0xa42675322870Df548A53FCDb8b389Dd9033B84b7)
   - **Synthetic Token Name** - Test uBTC
   - **Synthetic Symbol** - uBTC_TEST
   - **Price Identifier** - BTC/USD
+  - **Collateral Currency** - [`TestnetERC20`](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/contracts/common/implementation/TestnetERC20.sol)
+
+
+### Test EMP Contracts (Testnet)
+#### Setup
+Since above contracts use `TestnetERC20` as collateral currency, so I have allocated 10K tokens to both the
+accounts given below, so just load the any of the accounts using below private keys.
+```
+ACCOUNT1=0xae8d1a30160cd8cb112a324a8c918455286ded80ebd4021b2e767ef9a8ebd193
+ACCOUNT2=0x8ba492da5a1dbfd05669a2afaef709109d1d41a8fa49a0bc95af5d92e2c55b7a
+```
+
+Start the truffle console for testnet
+```
+$ yarn truffle console --network htestnet0
+```
+
+#### Create new tokens from an existing contract
+
+1. Load the EMP Contract
+```
+truffle(htestnet0)> const emp = await ExpiringMultiParty.at("0x8c4394c5c1E997BD7cA25605D1c821Cbd37cF534")
+```
+
+2. We can now create a synthetic token position. We will deposit 150 units of collateral (the first argument) to create 100 units of synthetic tokens (the second argument).
+
+```js
+await emp.create({ rawValue: web3.utils.toWei("150") }, { rawValue: web3.utils.toWei("100") })
+```
+
+3. Let’s check that we now have synthetic tokens.
+
+<!-- prettier-ignore -->
+```js
+const syntheticToken = await SyntheticToken.at(await emp.tokenCurrency())
+// synthetic token balance. Should equal what we minted in step 2.
+(await syntheticToken.balanceOf(accounts[0])).toString()
+
+// Collateral token balance. Should equal original balance minus deposit (150e18).
+(await collateralToken.balanceOf(accounts[0])).toString()
+
+// position information. Can see the all key information about our position.
+await emp.positions(accounts[0])
+```
+
+#### Redeem tokens against a contract
+
+1. Because we are a token sponsor for this synthetic token contract, we can redeem some of the tokens we minted even before the synthetic token expires. Let's redeem half.
+
+```js
+await syntheticToken.approve(emp.address, web3.utils.toWei("10000"))
+await emp.redeem({ rawValue: web3.utils.toWei("50") })
+```
+
+2. Let’s check that our synthetic token balance has decreased and our collateral token balance has increased.
+   Because the contract does not have an on-chain price feed to determine the token redemption value for the tokens, it will give us collateral equal to the proportional value value of the total collateral deposited to back the 100 tokens (50/100 \* 150 = 75).
+
+<!-- prettier-ignore -->
+```js
+// Print balance of collateral token.
+(await collateralToken.balanceOf(accounts[0])).toString()
+
+// Print balance of the synthetic token.
+(await syntheticToken.balanceOf(accounts[0])).toString()
+
+// position information
+await emp.positions(accounts[0])
+```
+
+#### Deposit collateral
+
+1. As a token sponsor, we may wish to add additional collateral to our position to avoid being liquidated.
+   Let’s deposit 10 additional collateral tokens to our position
+
+<!-- prettier-ignore -->
+```js
+await emp.deposit({ rawValue: web3.utils.toWei("10") })
+(await collateralToken.balanceOf(accounts[0])).toString()
+```
+
 
 # <pre>**# Deploy EMP Financial Product Template**</pre>
 
