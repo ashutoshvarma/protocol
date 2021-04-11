@@ -140,7 +140,7 @@ truffle(htestnet0)>  await identifierWhitelist.addSupportedIdentifier(myIdentifi
   - **Synthetic Token Name** - Test UMA Token
   - **Synthetic Symbol** - UMATEST
   - **Price Identifier** - UMATEST
-  - **Collateral Currency** - [`TestnetERC20`](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/contracts/common/implementation/TestnetERC20.sol)
+  - **Collateral Currency** - [`TestnetERC20`](https://github.com/ashutoshvarma/protocol/blob/harmony/packages/core/contracts/common/implementation/TestnetERC20.sol)(Named `DAI`)
 
 - ### Mainnet0
   - **EMP Address** - [0xa42675322870Df548A53FCDb8b389Dd9033B84b7](https://explorer.harmony.one/#/address/0xa42675322870Df548A53FCDb8b389Dd9033B84b7)
