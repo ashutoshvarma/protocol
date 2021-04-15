@@ -22,7 +22,9 @@ const msgs = {
     )} ⚔️,\nand I track all the positions created on UMA protocol\\. I was created by UMA community and now it's my mission to help all UMA Position Holders against ${tgFormat.bold(
       "Market Fluctuations"
     )}\\. I work day and night rigorously to achieve this goal and I am very excited to help you\n\n` +
-    `The process is extremely simple\\.\n\n1\\. ADD\nStart by Adding Monitor request for your position\\.\nTo add monitor request, use\n\n ${tgFormat.monospace(
+    `The process is extremely simple\\.\n\n${tgFormat.bold(
+      "1\\. ADD"
+    )}\nStart by Adding Monitor request for your position\\.\nTo add monitor request, use\n\n ${tgFormat.monospace(
       "/add EMP_ADDRESS SPONSOR_ADDRESS CR_TRIGGER_VALUE"
     )}\n\nExample: If you want to track ${tgFormat.bold("UGas")} contract of token sponsor ${tgFormat.monospace(
       "0x4a29e88cEA7e1505DB9b6491C749Fb5d6d595265"
@@ -30,13 +32,18 @@ const msgs = {
       "10"
     )} then use\n\n ${tgFormat.monospace(
       "/add 0x516f595978D87B67401DaB7AfD8555c3d28a3Af4 0x4a29e88cEA7e1505DB9b6491C749Fb5d6d595265 10"
-    )}\n\n You can add multiple monitor requests using the same process shown above\\.\n\n\n2\\. LIST
+    )}\n\n You can add multiple monitor requests using the same process shown above\\.\n\n${tgFormat.bold("2\\. LIST")}
 Check the number of monitor requests we are tracking for you using /list\\.
-\n3\\. REMOVE\nIf you wish to stop monitoring your position use the remove functionality\\.\n\nFirst check the serial number of monitoring request using /list and use
+\n${tgFormat.bold(
+      "3\\. REMOVE"
+    )}\nIf you wish to stop monitoring your position use the remove functionality\\.\n\nFirst check the serial number of monitoring request using /list and use
  ${tgFormat.monospace(
    "/remove SERIAL_NUMBER_OF_MONITOR_REQUEST_IN_LIST"
  )}\n\nFor Example: If we want to delete the monitor request with serial number 1 then,
- ${tgFormat.monospace("/remove 1")}\n\nSimple, Isn't it?\nNow you are all set to use  ${tgFormat.bold(
+ ${tgFormat.monospace("/remove 1")}\n\n${tgFormat.bold("4\\. UPDATE")}
+If you wish to update the CR Trigger for existing Monitor Request the first check the serial number of monitoring request using /list and use /update\n ${tgFormat.monospace(
+      "/update <MONITOR_REQUEST_INDEX> <NEW_CR_VALUE>"
+    )} \n\nSimple, Isn't it?\nNow you are all set to use  ${tgFormat.bold(
       "UMA Notifier Bot"
     )}\\.\nIf you ever get stuck, use /help to get a list of ${tgFormat.bold(
       "Frequently Asked Questions \\(FAQs\\)"
@@ -44,9 +51,13 @@ Check the number of monitor requests we are tracking for you using /list\\.
 
   helpMsg: () => `Welcome to the help section of  ${tgFormat.bold("UMA Notifier Bot")} ⚔️\n\n${tgFormat.bold(
     "FAQs"
-  )}\n\n1\\. How can I add multiple requests?\nSimply use /add multiple times to add multiple monitor requests\\. Currently there is no upper limit on number of monitor requests you can register\\.
-  \n\n2\\. How can I change the Notification Collateral Ratio\\(NCR\\)?\nNotification Collateral Ratio\\(NCR\\) is the ratio below which this bot will send you notifications so that you can mange your positions\\.
-If you want to change this variable then just remove the request using /remove and add new request with your preferred NCR\\.\n\nIf you want to learn more about UMA Protocol, visit ${tgFormat.url(
+  )}\n\n${tgFormat.bold(
+    "1\\. How can I add multiple requests?"
+  )}\nSimply use /add multiple times to add multiple monitor requests\\. Currently there is no upper limit on number of monitor requests you can register\\.
+  \n\n${tgFormat.bold(
+    "2\\. How can I change the Notification Collateral Ratio\\(NCR\\)?"
+  )}\nNotification Collateral Ratio\\(NCR\\) is the ratio below which this bot will send you notifications so that you can mange your positions\\.
+If you want to change this variable for existing Monitor Requests then just use /update \\.\n\nIf you want to learn more about UMA Protocol, visit ${tgFormat.url(
     "Official UMA Website",
     "https://docs.umaproject.org/getting\\-started/how\\-uma\\-works"
   )}\\.
@@ -77,7 +88,10 @@ All the data is removed from server after user use /remove\\.`,
 
   removeSuccess: () => tgFormat.bold("Successfully removed 👍"),
 
-  updateHelp: () => "Please provide valid monitor request along with new CR value",
+  updateHelp: () =>
+    tgFormat.bold("Please provide valid monitor request along with new CR value") +
+    "\n" +
+    tgFormat.monospace("/update <MONITOR_REQUEST_INDEX> <NEW_CR_VALUE>"),
 
   updateFailed: () => "Failed to update monitor request 😓",
 
